@@ -50,10 +50,7 @@ contract CrowdFund {
     function launch(uint _goal, uint32 _startAt, uint32 _endAt) external {
         require(_startAt >= block.timestamp, "start at < now");
         require(_endAt >= _startAt, "end at < start at");
-        require(
-            _endAt <= block.timestamp + 20 minutes,
-            "end at > max duration"
-        ); // 至少持续20分钟
+        require(_endAt <= _startAt + 20 minutes, "end at > max duration"); // 最长活动时间为20分钟
 
         // 补全
     }
