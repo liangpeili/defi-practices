@@ -111,6 +111,8 @@ contract Exchange is ERC20 {
         emit RemoveLiquidity(msg.sender, usdtAmount, tokenAmount);
     }
 
+    // 案例： 10000 USDT * 10000 Token  = 1 亿
+
     // 使用特定数量的USDT购买Token
     function swapExactUsdtToToken(
         uint256 amountUsdtIn,
@@ -118,6 +120,8 @@ contract Exchange is ERC20 {
         address to
     ) public {
         // 补全
+        // 案例：输入10000 USDT， 期望输出 5000 Token，reserve变成 20000 USDT，5000 Token
+
         emit TokenPurchase(to, amountUsdtIn, amountTokenOut);
     }
 
@@ -128,6 +132,7 @@ contract Exchange is ERC20 {
         address to
     ) public {
         // 补全
+        // 案例：reserve 10000 USDT，10000 Token。 换出 5000 Token, 期望输入 10000  USDT， 此时resserve变成 20000 USDT，5000 Token
         emit TokenPurchase(to, amountTokenIn, amountTokenOut);
     }
 
@@ -138,6 +143,7 @@ contract Exchange is ERC20 {
         address to
     ) public {
         // 补全
+        // reserve 20000 USDT，5000 Token。此时卖出来 10000 USDT, 期望输入 5000 Token，reserve变成 10000 USDT，10000 Token
         emit UsdtPurchase(to, amountUsdtOut, amountTokenIn);
     }
 
@@ -148,6 +154,7 @@ contract Exchange is ERC20 {
         address to
     ) public {
         // 补全
+        // reserve 20000 USDT，5000 Token， 此时卖出来 10000 USDT，期望输入  50000   Token。 此时reserve变成 10000 USDT，10000 Token
         emit UsdtPurchase(to, amountUsdtOut, amountTokenIn);
     }
 
