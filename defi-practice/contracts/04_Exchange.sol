@@ -4,10 +4,6 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-interface IFactory {
-    function getExchange(address tokenAddress) external returns (address);
-}
-
 contract Exchange is ERC20 {
     address public tokenAddress;
     address public usdtAddress;
@@ -60,32 +56,6 @@ contract Exchange is ERC20 {
                 usdtAmount
             );
             liquidity = _sqrt(tokenAmount * usdtAmount);
-        } else {
-            usdtReserve =
-                usdtReserve -
-                IERC20(usdtAddress).balanceOf(address(this));
-
-            uint256 expectedTokenAmount = (IERC20(usdtAddress).balanceOf(
-                address(this)
-            ) * tokenReserve) / usdtReserve;
-            require(
-                tokenAmount >= expectedTokenAmount,
-                "Insufficient token amount"
-            );
-
-            IERC20(tokenAddress).transferFrom(
-                msg.sender,
-                address(this),
-                expectedTokenAmount
-            );
-            IERC20(usdtAddress).transferFrom(
-                msg.sender,
-                address(this),
-                usdtAmount
-            );
-            liquidity =
-                (totalSupply() * IERC20(usdtAddress).balanceOf(address(this))) /
-                usdtReserve;
         }
 
         _mint(msg.sender, liquidity);
