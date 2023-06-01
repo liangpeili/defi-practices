@@ -167,6 +167,7 @@ contract Exchange is ERC20 {
         usdtReserve = IERC20(usdtAddress).balanceOf(address(this));
     }
 
+    // x * y = (x + dx) * (y - dy)
     // 已知确定的输入数量和币种，计算输出数量
     function getAmountOut(
         uint256 inputAmount,
